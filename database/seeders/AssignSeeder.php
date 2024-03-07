@@ -17,11 +17,11 @@ class AssignSeeder extends Seeder
         $role = Role::where('name', 'superadmin')->first();
         $role->givePermissionTo(Permission::all());
 
-        $roleadmin = Role::where('name', 'admin')->first();
-        $roleadmin->givePermissionTo('own posts', 'create posts', 'edit own post', 'delete own post', 'view posts', 'comment on posts');
-        //   $role->givePermissionTo();
+        // $roleadmin = Role::where('name', 'admin')->first();
+        // $roleadmin->givePermissionTo('personal posts list', 'create posts', 'edit personal posts', 'delete personal posts', 'view any post', 'comment on posts');
+        // //   $role->givePermissionTo();
      
-        $roleViewer = Role::where('name', 'viewer')->first();
-        $roleViewer->givePermissionTo('view posts', 'comment on posts');
+        // $roleViewer = Role::where('name', 'viewer')->first();
+        // $roleViewer->givePermissionTo('view any post', 'comment on posts');
     }
 }

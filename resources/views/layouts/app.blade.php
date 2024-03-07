@@ -73,11 +73,14 @@
                                     </a>
 
                                     <!-- Users Link -->
-                                    @can('watch users')
+                                    @can('view users list')
                                         <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
                                     @endcan
-                                    @can('own posts')
+                                    @can('personal posts list')
                                         <a class="dropdown-item" href="{{ route('own.posts') }}">My Posts</a>
+                                    @endcan
+                                    @can('Assign Permissions')
+                                        <a class="dropdown-item" href="{{ route('roles.index') }}">Roles Management</a>
                                     @endcan
                                     <!-- Logout Form -->
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

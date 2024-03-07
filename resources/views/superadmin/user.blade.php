@@ -5,7 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Users Management</div>
+                    <div class="card-header">Users Management
+
+                        <a href="{{route('create.users')}}" class="btn btn-success" >Create Users</a>
+                    </div>
 
                     <div class="card-body">
                         <table class="table mt-4">

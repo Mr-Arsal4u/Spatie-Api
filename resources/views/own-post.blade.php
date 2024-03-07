@@ -38,19 +38,19 @@
                                             <td>{{ $post->title }}</td>
                                             <td>{{ $post->created_at->diffForHumans() }}</td>
                                             <td>
-                                                @can('edit own post')
+                                                @can('edit personal posts')
                                                     <a href="{{ route('post.edit', $post->id) }}"
                                                         class="btn btn-primary">Edit</a>
                                                 @endcan
 
-                                            @can('delete own post')
+                                            @can('delete personal posts')
                                                 <form method="POST" action="{{ route('post.delete', $post->id) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             @endcan
-                                            @can('view posts')
+                                            @can('personal posts list')
                                                 <a href="{{ route('post.show', $post->id) }}"
                                                     class="btn btn-success">View</a>
                                             @endcan

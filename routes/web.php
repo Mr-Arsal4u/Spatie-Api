@@ -44,9 +44,16 @@ Route::middleware(['role:superadmin|admin'])->prefix('post')->group(function () 
     Route::get('/create', [PostController::class, 'create'])->name('post.create');
     Route::get('own-post', [PostController::class, 'ownPost'])->name('own.posts');
     Route::post('/store', [PostController::class, 'store'])->name('post.store');
-}); 
-Route::put('update-role/{id}', [RoleController::class, 'updateRole'])->name('update.role')->middleware('role:superadmin');
-Route::get('users', [UserController::class, 'index'])->name('users.index')->middleware('role:superadmin');
+});
+Route::middleware(['role:superadmin'])->group(function () {
+    Route::put('update-role/{id}', [RoleController::class, 'updateRole'])->name('update.role');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('roles', [RoleController::class, 'role_permissions'])->name('roles.index');
+    Route::get('create-users', [UserController::class, 'usercreate'])->name('create.users');
+    Route::post('save-user', [UserController::class, 'store'])->name('store.users');
+    Route::post('save-permission', [RoleController::class, 'save_permissions'])->name('save.permissions');
+});
 
-Auth::routes(['verify' => true]);
+
+Auth::routes(['verify' => false]);
 Route::get('/home', [HomeController::class, 'index'])->name('home');

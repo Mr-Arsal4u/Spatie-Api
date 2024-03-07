@@ -16,69 +16,72 @@
                             </div>
                         @endif
 
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Created At</th>
-                                    <th>Author</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($posts->isEmpty())
+                        @can('all posts list')
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <b>
-                                            <td colspan="4" class="text-center">No posts yet</td>
-                                        </b>
+                                        <th>Title</th>
+                                        <th>Created At</th>
+                                        <th>Author</th>
+                                        <th>Action</th>
                                     </tr>
-                                @else
-                                    @foreach ($posts as $post)
-                                        <tr style="border-color: green" class="hover-effect">
-                                            <td>{{ $post->title }}</td>
-                                            <td>{{ $post->created_at->diffForHumans() }}</td>
-                                            <td>{{ $post->author->name }}</td>
-                                            <td>
-                                                @can('edit any post')
-                                                    <a href="{{ route('post.edit', $post->id) }}"
-                                                        class="btn btn-primary">Edit</a>
-                                                @elsecan('edit own post')
-                                                    @if ($post->author->id === auth()->user()->id)
+                                </thead>
+                                <tbody>
+                                    @if ($posts->isEmpty())
+                                        <tr>
+                                            <b>
+                                                <td colspan="4" class="text-center">No posts yet</td>
+                                            </b>
+                                        </tr>
+                                    @else
+                                        @foreach ($posts as $post)
+                                            <tr style="border-color: green" class="hover-effect">
+                                                <td>{{ $post->title }}</td>
+                                                <td>{{ $post->created_at->diffForHumans() }}</td>
+                                                <td>{{ $post->author->name }}</td>
+                                                <td>
+                                                    @can('edit all posts')
                                                         <a href="{{ route('post.edit', $post->id) }}"
                                                             class="btn btn-primary">Edit</a>
-                                                    @endif
-                                                @endcan
+                                                    @elsecan('edit personal posts')
+                                                        @if ($post->author->id === auth()->user()->id)
+                                                            <a href="{{ route('post.edit', $post->id) }}"
+                                                                class="btn btn-primary">Edit</a>
+                                                        @endif
+                                                    @endcan
 
-                                                @can('delete any post')
-                                                <form method="POST" action="{{ route('post.delete', $post->id) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @elsecan('delete own post')
-                                                @if ($post->author->id === auth()->user()->id)
-                                                    <form method="POST" action="{{ route('post.delete', $post->id) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
-                                                @endif
-                                            @endcan
-                                            
-                                                @can('view posts')
-                                                    <a href="{{ route('post.show', $post->id) }}"
-                                                        class="btn btn-success">View</a>
-                                                @endcan
-                                            </td>
+                                                    @can('delete all posts')
+                                                        <form method="POST" action="{{ route('post.delete', $post->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    @elsecan('delete personal posts')
+                                                        @if ($post->author->id === auth()->user()->id)
+                                                            <form method="POST" action="{{ route('post.delete', $post->id) }}">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        @endif
+                                                    @endcan
 
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
+                                                    @can('view any post')
+                                                        <a href="{{ route('post.show', $post->id) }}"
+                                                            class="btn btn-success">View</a>
+                                                    @endcan
+                                                </td>
 
-                        </table>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+
+                            </table>
+                        @endcan
                     </div>
+
+
                 </div>
             </div>
         </div>
